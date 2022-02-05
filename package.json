@@ -1,0 +1,23 @@
+{
+  "name": "ethereum-blockchain-explorer",
+  "version": "0.0.1",
+  "description": "",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "browser": "./src/browser.js",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^15.0.0",
+    "ethers": "^5.5.4",
+    "ganache-core": "^2.13.2",
+    "web3": "^1.7.0"
+  },
+  "devDependencies": {
+    "parcel": "latest"
+  }
+}

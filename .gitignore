@@ -1,0 +1,8 @@
+dist
+.cache
+!.gitignore
+*.lock
+.env
+node_modules
+.parcel-cache
+dist
