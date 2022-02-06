@@ -4,6 +4,7 @@ require('dotenv').config({ path: '../.env' })
 const Ganache = require('ganache-core');
 const { utils, Wallet, ethers:
     {
+        getDefaultProvider,
         providers: {
             JsonRpcProvider,
             Web3Provider,
@@ -12,7 +13,7 @@ const { utils, Wallet, ethers:
     }
 } = require('ethers');
 
-const { DEFAULT_NETWORK, RPC_PORT } = require('../src/config');
+const { DEFAULT_RPCD_PROVIDER, DEFAULT_NETWORK, RPC_PORT } = require('../src/config');
 
 /**
  * Object containing Web3Wallet input parameters.
@@ -47,6 +48,7 @@ const { DEFAULT_NETWORK, RPC_PORT } = require('../src/config');
  */
 class Web3Wallet {
     #mnemonic;
+    #rpcProvider;
     #network;
     #rpcPort;
     #balance;
@@ -60,6 +62,7 @@ class Web3Wallet {
      */
     constructor(walletParamsObj = {
         mnemonic: process.env.MNEMONIC,
+        rpcProvider: DEFAULT_RPC_PROVIDER,
         network: DEFAULT_NETWORK,
         rpcPort: RPC_PORT.GANACHE,
         balance: '100',
@@ -78,6 +81,7 @@ class Web3Wallet {
          * associated balances.
          */
         this.#mnemonic = walletParamsObj?.mnemonic ? walletParamsObj.mnemonic : process.env.MNEMONIC;
+        this.#rpcProvider = walletParamsObj?.rpcProvider ? walletParamsObj.rpcProvider : DEFAULT_RPC_PROVIDER;
         this.#network = walletParamsObj?.network ? walletParamsObj.network : DEFAULT_NETWORK;
         this.#rpcPort = walletParamsObj?.rpcPort ? walletParamsObj.rpcPort : RPC_PORT.GANACHE;
         this.#balance = walletParamsObj?.balance ? walletParamsObj.balance.toString() : '100';
@@ -89,12 +93,18 @@ class Web3Wallet {
     }
 
     get mnemonic() { return this.#mnemonic; }
+    get rpcProvider() { return this.#rpcProvider; }
     get network() { return this.#network; }
     get rpcPort() { return this.#rpcPort; }
     get balance() { return this.#balance; }
     get numberOfWallets() { return this.#numberOfWallets; }
     get provider() { return this.#provider; }
     get bip44Wallet() { return this.#bip44Wallet; }
+
+    set rpcProvider(_rpcProvider) {
+        this.#rpcProvider = _rpcProvider;
+        this.#resetProvider();
+    }
 
     set network(_network) {
         this.#network = _network;
@@ -122,11 +132,11 @@ class Web3Wallet {
     }
 
     /**
-     * @property {Function} getAlchemyApiKey returns the ALCHEMY RPC node key for the
+     * @property {Function} getRpcNodeProvider returns the ALCHEMY RPC node key for the
      * [network](network).
      * @returns {string} The ALCHEMY RPC node key for the [network](#network).
      */
-    #getAlchemyApiKey = () => process.env[`ALCHEMY_${this.#network}_KEY`];
+    #getRpcNodeProvider = () => process.env[`${this.#rpcProvider}_${this.#network}_KEY`];
 
     /**
      * @property {Function} setProvider Set a JSON-RPC node provider per the set
@@ -136,12 +146,16 @@ class Web3Wallet {
      * @returns void
      */
     #setProvider = (addresses = []) => {
+        let _key;
+
         switch (this.#network.toUpperCase()) {
             case ('GANACHE'):
+                console.log('USING GANACHE PROVIDER')
                 const _url = `http://127.0.0.1:${this.#rpcPort}`;
                 this.#provider = new JsonRpcProvider(_url);
                 break;
             case ('GANACHE_CORE'):
+                console.log('USING GANACHE_CORE PROVIDER')
                 if (addresses === []) {
                     this.#provider = null;
                 }
@@ -158,9 +172,24 @@ class Web3Wallet {
                     );
                 }
                 break;
-            default:
-                const _key = this.#getAlchemyApiKey();
+        }
+
+        switch (this.#rpcProvider.toUpperCase()) {
+            case ('ALCHEMY'): 
+                console.log(`USING ${this.#rpcProvider} PROVIDER`)          
+                _key = this.#getRpcNodeProvider();
                 this.#provider = new AlchemyProvider(this.#network.toLowerCase(), _key);
+                break;
+            case ('POCKET'):
+                console.log(`USING ${this.#rpcProvider} PROVIDER`)
+                const _network = this.#network.toLowerCase();
+                const _rpcProvider = this.#rpcProvider.toLowerCase();
+                _key = this.#getRpcNodeProvider();
+
+                this.#provider = new getDefaultProvider(
+                    _network,
+                    { _rpcProvider: _key }
+                );
                 break;
         }
     }

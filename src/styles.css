@@ -1,4 +1,43 @@
+body {
+    font-family: Consolas, Lucida Console, Candara, Trebuchet MS, Helvetica, sans-serif;
+    background: #333;
+    margin: 0;
+    padding: 0;
+}
+
 h1 {
-    color: red;
+    color: blue;
     font-family: cursive;
+  }
+
+  .container-div {
+      background: #777;
+      color: whitesmoke;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 20px;
+  }
+
+  .contents-div {
+      margin: 10px 0;
+  }
+
+  .contents-block {
+      background: #777;
+      color: whitesmoke;
+      border: none;
+      display: inline-block;
+  }
+
+  .contents-block-label {
+      width: 160px;
+      margin: 0;
+      padding: 0 0 0 5px;
+  }
+
+  .contents-block-value {
+      width: 570px;
+      margin: 0;
+      padding: 0;
   }
