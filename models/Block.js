@@ -32,7 +32,7 @@ class Block {
     get number() { return this.#properties.number; }
     get parentHash() { return this.#properties.parentHash; }
     get timestamp() { return this.#properties.timestamp; }
-    get transactions() { return this.#properties.transactions.reverse(); }
+    get transactions() { return this.#properties.transactions; }
     get _difficulty() { return this.#properties._difficulty; }
 
     keys = () => {
@@ -41,9 +41,8 @@ class Block {
 
     async setBlock(blockNum) {
         const _block = await this.#provider.getBlock(blockNum);
-        this.#properties = _block;        
+        this.#properties = _block;
     }
-
 }
 
 module.exports = Block;

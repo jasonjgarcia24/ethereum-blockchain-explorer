@@ -5,19 +5,36 @@ body {
     padding: 0;
 }
 
-h1 {
-    color: blue;
-    font-family: cursive;
-  }
+.container-all-status {
+    width: 880px;
+    margin: 50px auto;
+    padding: 7px;
+    background: none;
+    border-radius: 20px;
+}
 
-  .container-div {
-      background: #777;
+.container-all {
+    background: #777;
+    color: whitesmoke;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 20px 30px;
+    border-radius: 20px;
+}
+
+.container-data {
+    background: #777;
+    color: whitesmoke;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0px;
+}
+
+  .container-title {
       color: whitesmoke;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 30px;
-      border-radius: 20px;
-  }
+      margin: 0;
+      padding: 0 0 15px 0;
+    }
 
   .contents-div {
       margin: 10px 0;
@@ -31,7 +48,7 @@ h1 {
   }
 
   .contents-block-label {
-      width: 160px;
+      width: 180px;
       margin: 0;
       padding: 0 0 0 5px;
   }
@@ -40,4 +57,9 @@ h1 {
       width: 570px;
       margin: 0;
       padding: 0;
+  }
+
+  .contents-block-status-value {
+      font-size: 28px;
+      padding: 2px 0;
   }

@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 require('dotenv').config({ path: '../.env' })
+
 const Ganache = require('ganache-core');
 const { utils, Wallet, ethers:
     {
@@ -8,7 +9,8 @@ const { utils, Wallet, ethers:
         providers: {
             JsonRpcProvider,
             Web3Provider,
-            AlchemyProvider
+            AlchemyProvider,
+            EtherscanProvider
         }
     }
 } = require('ethers');
