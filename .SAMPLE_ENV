@@ -1,0 +1,11 @@
+MNEMONIC = <mnemonic here>
+
+ETHERSCAN_KEY = <etherscan api key here>
+
+ALCHEMY_RINKEBY_KEY = <alchemy rinkeby api key here>
+ALCHEMY_KOVAN_KEY = <alchemy kovan api key here>
+
+ALCHEMY_RINKEBY_URL = <alchemy rinkeby api url here>
+ALCHEMY_KOVAN_URL = <alchemy kovan api url here>
+
+POCKET_RINKEBY_URL = <pocket api url here>
