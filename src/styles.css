@@ -5,11 +5,80 @@ body {
     padding: 0;
 }
 
+.container-network {
+    width: 260px;
+    height: 50px;
+    position: absolute;
+    margin: 20px 0 0 600px;
+    padding: 0;
+    background: #333;
+    border-radius: 7px;
+}
+
+.dropdown-button {
+    background-color: #333;
+    color: whitesmoke;
+    width: 260px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.dropdown-button:hover, .dropdown-button:focus {
+    background-color: #555;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-network {
+    display: none;
+    position: absolute;
+    background-color: whitesmoke;
+    text-align: center;
+    width: 260px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 7px;
+    z-index: 1;
+}
+
+.dropdown-network a {
+    color: black;
+    margin: 0;
+    padding: 10px 0;
+    border-top: 1px solid #3498DB;
+    border-left: 1px solid #3498DB;
+    border-right: 1px solid #3498DB;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #3498DB;}
+
+.show {display: block;}
+
+.network-title {
+    color: whitesmoke;
+    text-align: center;
+    width: 280px;
+    height: 40px;
+    margin: auto;
+    padding: 5px;
+    border: 1px solid black;
+}
+
 .container-all-status {
     width: 880px;
-    margin: 50px auto;
+    margin: 40px auto 30px auto;
     padding: 7px;
-    background: none;
+    background: #777;
     border-radius: 20px;
 }
 
@@ -27,39 +96,129 @@ body {
     color: whitesmoke;
     max-width: 800px;
     margin: 0 auto;
-    padding: 0px;
+    padding: 0;
 }
 
-  .container-title {
-      color: whitesmoke;
-      margin: 0;
-      padding: 0 0 15px 0;
-    }
+.container-title {
+    color: whitesmoke;
+    margin: 0;
+    padding: 0 0 15px 0;
+}
 
-  .contents-div {
-      margin: 10px 0;
-  }
+.contents-div {
+    margin: 10px 0;
+}
 
-  .contents-block {
+.collapsible {
+    background: #333;
+    color: whitesmoke;
+    cursor: pointer;
+    margin: 0;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    border-radius: 7px;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .collapsible:hover {
+    background: #555;
+}
+
+.contents-div-all-transaction {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background: #777;
+    color: whitesmoke;
+}
+
+.contents-block {
       background: #777;
       color: whitesmoke;
       border: none;
       display: inline-block;
   }
 
-  .contents-block-label {
-      width: 180px;
-      margin: 0;
-      padding: 0 0 0 5px;
-  }
+.contents-block-label {
+    width: 180px;
+    margin: 0;
+    padding: 0 0 0 5px;
+}
 
-  .contents-block-value {
-      width: 570px;
-      margin: 0;
-      padding: 0;
-  }
+.contents-block-value {
+    width: 570px;
+    margin: 0;
+    padding: 0;
+}
 
-  .contents-block-status-value {
-      font-size: 28px;
-      padding: 2px 0;
+.contents-block-status-value {
+    font-size: 28px;
+    padding: 2px 0;
+}
+
+.container-all-bytecode {
+    width: 1200px;
+    margin: 30px auto 40px auto;
+    padding: 20px 30px;
+    display: none;
+    background: #777;
+    border-radius: 20px;
+}
+
+.container-contents-bytecode {
+    max-width: 100%;
+    background: #777;
+}
+
+.contents-div-all-bytecode-raw,
+.contents-div-all-bytecode-decompile,
+.contents-div-all-bytecode-opcodes {
+    display: none;
+}
+
+.contents-div-bytecode-raw,
+.contents-div-bytecode-decompile,
+.contents-div-bytecode-opcodes {
+    width: auto;
+    max-height: 500px;
+    overflow-x: auto;
+    overflow-y: auto;
+    background: #888;
+    border-radius: 10px;
+}
+
+.contents-block-bytecode-raw-value,
+.contents-block-bytecode-decompile-value,
+.contents-block-bytecode-opcodes-value {
+    width: 570px;
+    margin: 0;
+    padding: 15px 25px;
+    background: #888;
+    color: whitesmoke;
+    font-size: 18px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #222; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #999; 
   }

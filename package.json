@@ -14,7 +14,9 @@
   "dependencies": {
     "dotenv": "^15.0.0",
     "ethers": "^5.5.4",
+    "evm": "^0.2.0",
     "ganache-core": "^2.13.2",
+    "utf8": "^3.0.0",
     "web3": "^1.7.0"
   },
   "devDependencies": {

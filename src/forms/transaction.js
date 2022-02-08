@@ -1,20 +1,21 @@
 const { utils } = require('ethers');
 
-const pageTitle = document.getElementById('container-title');
+const pageTitle = document.getElementById('contents-title');
 const containerDiv = document.getElementById('container-data');
 const containerStatusDiv = document.getElementById('container-all-status');
 
 const PASS_EMOJI = String.fromCodePoint('0x1F60E');
+const CHECK_EMOJI = String.fromCodePoint('0x2705');
 const FAIL_EMOJI = String.fromCodePoint('0x1F63F');
+const CROSS_EMOJI = String.fromCodePoint('0x274C');
+
 
 const showTransaction = (transaction, wallet) => {
     pageTitle.textContent = 'Transaction Explorer';
     let _onClick;
     let _value;
-    console.log(transaction)
 
     transaction.keys().forEach(key => {
-        console.log(key)
         switch (key) {
             case 'blockHash':
             case 'blockNumber':
@@ -27,18 +28,19 @@ const showTransaction = (transaction, wallet) => {
                 showLinkedTransactionData(`${key}`, transaction[key], _onClick);
                 break;
             case 'status':
-                console.log(containerStatusDiv)
                 if (transaction[key]) {
                     _value = PASS_EMOJI;
+                    pageTitle.textContent = `${pageTitle.textContent}    ${CHECK_EMOJI} SUCCESS`;
                     containerStatusDiv.style.background = '#1a3';
                 }
                 else {
                     _value = FAIL_EMOJI;
+                    pageTitle.textContent = `${pageTitle.textContent}    ${CROSS_EMOJI} FAIL`;
                     containerStatusDiv.style.background = '#f25';
                 }
                 _value = transaction[key] ? PASS_EMOJI : FAIL_EMOJI;
 
-                
+
                 showTransactionData(key, _value)
                 break;
             // case 'maxPriorityFeePerGas':
@@ -88,7 +90,7 @@ const showTransactionData = (key, value) => {
     containerDiv.appendChild(_div);
 }
 
-const showLinkedTransactionData = (key, value, onClick) => {        
+const showLinkedTransactionData = (key, value, onClick) => {
     let _div = document.createElement('DIV');
     let _value = document.createElement('A');
     let _label = document.createElement('LABEL');
@@ -106,7 +108,7 @@ const showLinkedTransactionData = (key, value, onClick) => {
     _value.className = _value_className;
     _value.id = _id;
     _value.value = value;
-    _value.href = '#';
+    _value.href = '';
     _value.onclick = onClick;
     _value.setAttribute('readonly', true);
     _value.appendChild(_value_text);
@@ -127,13 +129,14 @@ const redirectBlockURL = async (blockNum, wallet) => {
     const { showBlock } = require('./block');
     const Block = require('../../models/Block');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
+    const _new_path = `${window.location.origin}/block/${blockNum}`;
 
-    // window.location = `?tx=${transactionHash}`;
+    history.pushState('', '', _new_path);
     removeAllDivChildren(containerDiv);
 
     const aBlock = new Block(wallet.provider);
     await aBlock.setBlock(blockNum);
-    
+
     showBlock(aBlock, wallet)
 }
 
@@ -143,11 +146,12 @@ const redirectAccountURL = async (account, wallet) => {
     const { showAccount } = require('./account');
     const Account = require('../../models/Account');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
+    const _new_path = `${window.location.origin}/account/${account}`;
 
-    // window.location = `?tx=${transactionHash}`;
+    history.pushState('', '', _new_path);
     removeAllDivChildren(containerDiv);
 
-    const aAccount = new Account(wallet.provider, wallet.network, account);    
+    const aAccount = new Account(wallet.provider, wallet.network, account);
     showAccount(aAccount, wallet)
 }
 

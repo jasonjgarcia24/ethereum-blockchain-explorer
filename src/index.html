@@ -1,20 +1,37 @@
 <!doctype html>
 <html lang="en">
 
-  <head>
-    <meta charset="utf-8"/>
-    <title>My First Parcel App</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="index.js"></script>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <title>My First Parcel App</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="module" src="index.js"></script>
+</head>
 
-  <body>
-    <div class='container container-all-status' id='container-all-status'>
-      <div class='container container-all' id='container-all'>
-        <h1 class='container-title' id='container-title'></h1>
-        <div class='container container-data' id='container-data'></div>
+<body>
+  <div class='container container-all-status' id='container-all-status'>
+    <div class='container container-div container-network' id='container-network'>
+      <div class='dropdown'>
+        <button class='dropdown-button' id='dropdown-button'></button>
+        <div class='dropdown-network' id='dropdown-network'>
+          <a href='' class='link-network link-network-mainnet' name='mainnet'>Ethereum - Mainnet</a>
+          <a href='' class='link-network link-network-rinkeby' name='rinkeby'>Ethereum - Rinkeby</a>
+          <a href='' class='link-network link-network-kovan' name='kovan'>Ethereum - Kovan</a>
+          <a href='' class='link-network link-network-ganache' name='ganache'>Ganache</a>
+        </div>
       </div>
     </div>
-  </body>
+
+    <div class='container container-all' id='container-all'>
+      <h1 class='container-title' id='contents-title'></h1>
+      <div class='container container-data' id='container-data'></div>
+    </div>
+  </div>
+
+  <div class='container container-all-bytecode' id='container-all-bytecode'>
+    <h1 class='container-title' id='bytecode-title'>Bytecode Explorer</h1>
+    <div class='container container-contents-bytecode' id='container-contents-bytecode'></div>
+  </div>
+</body>
 
 </html>

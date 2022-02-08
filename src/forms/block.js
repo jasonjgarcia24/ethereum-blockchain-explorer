@@ -1,4 +1,6 @@
-const pageTitle = document.getElementById('container-title');
+const { setCollapsibleTransactions } = require('../../utils/htmlElementUtils')
+
+const pageTitle = document.getElementById('contents-title');
 const containerDiv = document.getElementById('container-data');
 
 const showBlock = (block, wallet) => {
@@ -7,14 +9,16 @@ const showBlock = (block, wallet) => {
     block.keys().forEach(key => {
         switch (key) {
             case 'transactions':
+                let _txTitle = `Transactions (${block.transactions.length})`;
+                let _divAll = setCollapsibleTransactions(_txTitle);
                 block.transactions.forEach((tx, i) => {
                     let _onClick = () => { redirectTransactionURL(tx, wallet) };
-                    showLinkedBlockData(`transaction (${i})`, tx, _onClick);
+                    showLinkedBlockData(_divAll, `transaction (${i})`, tx, _onClick);
                 })
                 break;
             case 'parentHash':
-                let _onClick = () => { redirectBlockURL(block.number - 1, wallet)};
-                showLinkedBlockData(key, block.parentHash, _onClick);
+                let _onClick = () => { redirectBlockURL(block.number - 1, wallet) };
+                showLinkedBlockData(containerDiv, key, block.parentHash, _onClick);
                 break;
             case 'timestamp':
                 let _timestamp = new Date(parseInt(block[key]) * 1000);
@@ -26,7 +30,7 @@ const showBlock = (block, wallet) => {
     })
 }
 
-const showBlockData = (key, value) => {    
+const showBlockData = (key, value) => {
     let _div = document.createElement('DIV');
     let _value = document.createElement('INPUT');
     let _label = document.createElement('LABEL');
@@ -54,7 +58,7 @@ const showBlockData = (key, value) => {
     containerDiv.appendChild(_div);
 }
 
-const showLinkedBlockData = (key, value, onClick) => {    
+const showLinkedBlockData = (parentDiv, key, value, onClick) => {
     let _div = document.createElement('DIV');
     let _value = document.createElement('A');
     let _label = document.createElement('LABEL');
@@ -72,7 +76,7 @@ const showLinkedBlockData = (key, value, onClick) => {
     _value.className = _value_className;
     _value.id = _id;
     _value.value = value;
-    _value.href = '#';
+    _value.href = '';
     _value.onclick = onClick;
     _value.setAttribute('readonly', true);
     _value.appendChild(_value_text);
@@ -84,19 +88,21 @@ const showLinkedBlockData = (key, value, onClick) => {
     _div.appendChild(_value);
     _div.insertBefore(_label, _value);
 
-    containerDiv.appendChild(_div);
+    parentDiv.appendChild(_div);
 }
 
 const redirectBlockURL = async (blockNum, wallet) => {
     const Block = require('../../models/Block');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
+    const _network = wallet.network.toLowerCase();
+    const _new_path = `${window.location.origin}/${_network}/block/${blockNum}`;
 
-    // window.location = `?tx=${transactionHash}`;
+    history.pushState('', '', _new_path);
     removeAllDivChildren(containerDiv);
 
     const aBlock = new Block(wallet.provider);
     await aBlock.setBlock(blockNum);
-    
+
     showBlock(aBlock, wallet)
 }
 
@@ -104,14 +110,15 @@ const redirectTransactionURL = async (transactionHash, wallet) => {
     const { showTransaction } = require('./transaction');
     const Transaction = require('../../models/Transaction');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
+    const _network = wallet.network.toLowerCase();
+    const _new_path = `${window.location.origin}/${_network}/tx/${transactionHash}`;
 
-    // window.location = `?tx=${transactionHash}`;
+    history.pushState('', '', _new_path);
     removeAllDivChildren(containerDiv);
 
     const aTransaction = new Transaction(wallet.provider);
     await aTransaction.setTransaction(transactionHash);
-    console.log(aTransaction)
-    
+
     showTransaction(aTransaction, wallet)
 }
 
