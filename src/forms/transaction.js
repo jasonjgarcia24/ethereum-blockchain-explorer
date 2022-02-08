@@ -129,7 +129,8 @@ const redirectBlockURL = async (blockNum, wallet) => {
     const { showBlock } = require('./block');
     const Block = require('../../models/Block');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
-    const _new_path = `${window.location.origin}/block/${blockNum}`;
+    const _network = wallet.network.toLowerCase();
+    const _new_path = `${window.location.origin}/${_network}/block/${blockNum}`;
 
     history.pushState('', '', _new_path);
     removeAllDivChildren(containerDiv);
@@ -146,7 +147,8 @@ const redirectAccountURL = async (account, wallet) => {
     const { showAccount } = require('./account');
     const Account = require('../../models/Account');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
-    const _new_path = `${window.location.origin}/account/${account}`;
+    const _network = wallet.network.toLowerCase();
+    const _new_path = `${window.location.origin}/${_network}/account/${account}`;
 
     history.pushState('', '', _new_path);
     removeAllDivChildren(containerDiv);

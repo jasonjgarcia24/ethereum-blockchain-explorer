@@ -17,10 +17,11 @@ const NETWORK = (getNetworkCookie() || 'rinkeby').toUpperCase();
 
 
 const main = async () => {
-    setNetwork(NETWORK);
-
     const _location = window.location;
-    const [_, _network, _key, _value] = _location.pathname.split('/');
+    let [_, _network, _key, _value] = _location.pathname.split('/');
+    setNetwork(_network);
+
+    [_key, _value] = (_key && _value) ? [_key, _value] : ['block', 'latest'];
 
     let web3Wallet;
 
@@ -50,7 +51,8 @@ const main = async () => {
             break;
         case 'block':
         default:
-            console.log(_value)
+            _value = (_value === 'latest') ? _value : utils.hexlify(parseInt(_value));
+
             web3Wallet = new Web3Wallet({
                 rpcProvider: RPC_PROVIDER,
                 network: NETWORK,
@@ -58,7 +60,7 @@ const main = async () => {
             })
 
             const aBlock = new Block(web3Wallet.provider);
-            await aBlock.setBlock(utils.hexlify(parseInt(_value)))
+            await aBlock.setBlock(_value);
 
             showBlock(aBlock, web3Wallet)
             break;

@@ -190,7 +190,8 @@ const redirectTransactionURL = async (transactionHash, wallet) => {
     const { showTransaction } = require('./transaction');
     const Transaction = require('../../models/Transaction');
     const { removeAllDivChildren } = require('../../utils/htmlElementUtils');
-    const _new_page = `${window.location.origin}/tx/${transactionHash}`;
+    const _network = wallet.network.toLowerCase();
+    const _new_page = `${window.location.origin}/${_network}/tx/${transactionHash}`;
 
     removeAllDivChildren(bytecodeDiv);
     bytecodeTopDiv.style.display = "none";
